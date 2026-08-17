@@ -1,0 +1,10 @@
+torch==2.6.0
+scikit-learn==1.6.1
+miditoolkit==1.0.1
+numpy==1.26.3
+pandas==2.2.3
+PyYAML==6.0.2
+scipy==1.13.1
+tqdm==4.67.1
+jupyter
+transformers==4.48.2

@@ -1,0 +1,73 @@
+conditioning:
+  mode: factorized_va
+reconstruction_objective:
+  mode: performance_attributes_only
+  attributes:
+    - tempo
+    - duration
+    - velocity
+arousal_alignment:
+  enabled: true
+  objective: paired_counterfactual_directional_hinge_v1
+  weight: 2.25
+  paired_dropout: true
+  attributes:
+    velocity:
+      enabled: true
+      margin: 0.05
+      weight: 0.875
+    tempo:
+      enabled: true
+      margin: 0.03
+      weight: 0.500
+    duration:
+      enabled: true
+      margin: 0.03
+      weight: 0.875
+    note_event_mass:
+      enabled: false
+      margin: 0.002
+      weight: 0.25
+    onset_event_mass:
+      enabled: false
+      margin: 0.002
+      weight: 0.25
+gradient_calibration:
+  source_checkpoint_role: v63_seed42_best
+  calibration_audit: stage3-tempo-velocity-gradient-conflict-audit-v1
+  target_shared_alignment_to_reconstruction_ratio: 0.025
+  smoke_lower_bound: 0.01
+  smoke_upper_bound: 0.10
+data_loader:
+  batch_size: 4
+  data_path: events/m2p/emopia_m2p_factorized_va_{}/events
+  train_split: events/m2p/emopia_m2p_factorized_va_functional/data_splits/train.pkl
+  val_split: events/m2p/emopia_m2p_factorized_va_functional/data_splits/valid.pkl
+  vocab_path: events/m2p/emopia_m2p_factorized_va_{}/dictionary.pkl
+model:
+  d_embed: 256
+  d_ff: 1024
+  d_model: 256
+  feature_map:
+    n_dims: 64
+  max_len: 1536
+  n_head: 4
+  n_layer: 6
+  use_segemb: true
+  n_segment_types: 2
+training:
+  gpuid: 0
+  ckpt_dir: ckpt/perf/emopia_calibrated_alignment_gpt2
+  ckpt_interval: 10
+  log_interval: 50
+  lr: 1.0e-05
+  lr_scheduler:
+    T_max: 500000
+    eta_min: 1.0e-06
+  num_epochs: 1000
+  trained_optim: null
+  trained_params: null
+  inference_params: null
+  warmup_steps: 200
+  accum_steps: 2
+  patience: 50

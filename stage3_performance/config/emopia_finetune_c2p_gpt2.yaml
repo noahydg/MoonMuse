@@ -1,0 +1,33 @@
+data_loader:
+  batch_size: 4
+  data_path: events/c2p/emopia_c2p_{}/events
+  train_split: events/c2p/emopia_c2p_functional/data_splits/train.pkl
+  val_split: events/c2p/emopia_c2p_functional/data_splits/valid.pkl
+  vocab_path: events/c2p/emopia_c2p_{}/dictionary.pkl
+model:
+  d_embed: 256
+  d_ff: 1024
+  d_model: 256
+  feature_map:
+    n_dims: 64
+  max_len: 1536
+  n_head: 4
+  n_layer: 6
+  use_segemb: true
+  n_segment_types: 2
+training:
+  gpuid: 0
+  ckpt_dir: ckpt/c2p/emopia_{}_gpt2
+  ckpt_interval: 10
+  log_interval: 50
+  lr: 1.0e-05
+  lr_scheduler:
+    T_max: 500000
+    eta_min: 1.0e-06
+  num_epochs: 1000
+  trained_optim: null
+  trained_params: null
+  inference_params: null
+  warmup_steps: 200
+  accum_steps: 2
+  patience: 50

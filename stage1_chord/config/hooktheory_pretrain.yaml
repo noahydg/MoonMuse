@@ -1,0 +1,40 @@
+device: cuda
+pretrained_optim_path: null
+pretrained_param_path: null
+inference_param_path:  null
+
+model:
+  d_word_embed: 256
+  pre_lnorm: True
+  decoder:
+    n_layer: 6
+    n_head: 4
+    d_model: 256
+    d_ff: 512
+    dropout: 0.1
+    mem_len: 0
+    tgt_len: 256
+
+data:
+  data_dir: events/chord/hooktheory_chord_functional/events
+  train_split: events/chord/hooktheory_chord_functional/data_splits_content_isolated/train.pkl
+  val_split: events/chord/hooktheory_chord_functional/data_splits_content_isolated/valid.pkl
+  vocab_path: events/chord/hooktheory_chord_functional/dictionary.pkl
+  batch_size: 32
+  max_n_seg: 1
+
+training:
+  trained_steps: 0
+  trained_epochs: 0
+  warmup_steps: 200
+  lr_decay_steps: 500000
+  max_lr: 1.0e-3
+  min_lr: 1.0e-4
+  max_epoch: 200
+  val_interval: 1
+  log_interval: 50
+  patience: 10
+
+output:
+    ckpt_dir: ckpt/chord/hooktheory_chord_functional
+    ckpt_interval: 5
