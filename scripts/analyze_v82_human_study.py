@@ -503,7 +503,7 @@ def analyze(args: argparse.Namespace) -> dict:
         args.output_dir,
         expected_formal=not args.prelaunch_test,
         eligible_per_form=args.eligible_per_form,
-        enforce_allocation=not args.prelaunch_test,
+        enforce_allocation=not args.prelaunch_test and not args.no_allocation_enforcement,
     )
     freeze_path = args.output_dir / "response_freeze_manifest.json"
     if freeze_manifest["status"] != "complete_and_frozen_before_unblinding":
@@ -618,6 +618,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", required=True, type=Path)
     parser.add_argument("--eligible-per-form", type=int, default=36)
     parser.add_argument("--prelaunch-test", action="store_true")
+    parser.add_argument(
+        "--no-allocation-enforcement",
+        action="store_true",
+        help="Validate server-assigned participant codes without the prelaunch code list.",
+    )
     return parser.parse_args()
 
 
