@@ -19,6 +19,7 @@ from convert_key import degree2pitch, roman2majorDegree, roman2minorDegree
 repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if repo_root not in sys.path:
     sys.path.insert(0, repo_root)
+from source_key import declared_source_key
 from generation_budget import (
     OnsetPitchTracker,
     RejectionBudget,
@@ -229,10 +230,7 @@ def merge_tracks(melody_track, chord_track):
 def read_generated_events(events_file, event2idx):
     events = open(events_file).read().splitlines()
     # print('[test 1] events:', events)
-    if 'Key' in events[0]:
-        key = events[0]
-    else:
-        key = 'Key_C'
+    key = declared_source_key(events)
 
     bar_pos = np.where(np.array(events) == 'Bar_None')[0].tolist()
     bar_pos.append(len(events))
