@@ -115,7 +115,10 @@ class REMISkylineToMidiTransformerDataset(Dataset):
         piece_chord_pos = self.piece_chord_pos[piece_idx]
         assert len(piece_chord_pos) == len(piece_melody_pos)
         # n_bars = len(piece_midi_pos)
-        st_bar = random.choice(self.piece_admissible_stbars[piece_idx])
+        st_bar = (random.choice(self.piece_admissible_stbars[piece_idx])
+                  if self.appoint_st_bar is None else self.appoint_st_bar)
+        if st_bar not in self.piece_admissible_stbars[piece_idx]:
+            raise ValueError('Requested start bar is outside admissible windows')
         return piece_evs, piece_melody_pos, piece_chord_pos, st_bar
 
     def pad_sequence(self, seq, maxlen, pad_value=None):

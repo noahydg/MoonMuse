@@ -5,6 +5,7 @@ import yaml
 import shutil
 import random
 import argparse
+import hashlib
 import numpy as np
 
 import torch
@@ -16,6 +17,9 @@ from utils import pickle_load
 
 sys.path.append('./model')
 train_steps = 0
+# SS26 Stage 2 PAD diagnostic: {} keeps the model default (PAD ignored);
+# {'ignore_index': -100} reproduces the historical objective that counted PAD.
+PAD_LOSS_KWARGS = {}
 
 
 def set_seed(seed):
@@ -79,7 +83,7 @@ def train_model(epoch, model, dloader, optim, sched, pad_token, model_type="perf
                 seg_inp=batch_track_mask,
                 chord_inp=None,
             )
-        losses = model.compute_loss(dec_logits, batch_dec_tgt)
+        losses = model.compute_loss(dec_logits, batch_dec_tgt, **PAD_LOSS_KWARGS)
 
         # clip gradient & update model
         if accum_steps > 1:
@@ -153,6 +157,8 @@ def validate(model, dloader, pad_token, rounds=1, model_type="performer"):
     chord_acc_rec = []
     melody_acc_rec = []
     others_acc_rec = []
+    nonpad_nll_sum = 0.0
+    nonpad_tokens = 0
 
     with torch.no_grad():
         for r in range(rounds):
@@ -179,7 +185,12 @@ def validate(model, dloader, pad_token, rounds=1, model_type="performer"):
                         chord_inp=None,
                     )
 
-                losses = model.compute_loss(dec_logits, batch_dec_tgt)
+                losses = model.compute_loss(dec_logits, batch_dec_tgt, **PAD_LOSS_KWARGS)
+                flat_tgt = batch_dec_tgt.contiguous().view(-1).long()
+                nonpad_nll_sum += torch.nn.functional.cross_entropy(
+                    dec_logits.view(-1, dec_logits.size(-1)), flat_tgt,
+                    ignore_index=pad_token, reduction='sum').item()
+                nonpad_tokens += int((flat_tgt != pad_token).sum().item())
                 if not batch_idx % 5:
                     print('  -- batch #{:03d}: valloss = {:.4f}'.format(
                         batch_idx + 1, losses['recons_loss'].item()
@@ -193,7 +204,8 @@ def validate(model, dloader, pad_token, rounds=1, model_type="performer"):
                 melody_acc_rec.append(melody_acc)
                 others_acc_rec.append(others_acc)
 
-    return loss_rec, total_acc_rec, chord_acc_rec, melody_acc_rec, others_acc_rec
+    nonpad_ce = nonpad_nll_sum / max(nonpad_tokens, 1)
+    return loss_rec, total_acc_rec, chord_acc_rec, melody_acc_rec, others_acc_rec, nonpad_ce
 
 
 def compute_accuracy(dec_logits, dec_target, inp_chord, inp_melody, pad_token):
@@ -253,6 +265,12 @@ if __name__ == "__main__":
     parser.add_argument('--reset_optimizer', action='store_true',
                         help='start a fresh optimizer when transferring pretrained parameters')
     parser.add_argument('--num_workers', type=int, default=8)
+    parser.add_argument('--pad-loss', dest='pad_loss', choices=['ignore', 'count'], default='ignore',
+                        help='ignore: PAD targets excluded (current default); count: historical objective')
+    parser.add_argument('--select-metric', dest='select_metric', choices=['own', 'nonpad_ce'], default='own',
+                        help='checkpoint selection: own validation loss (default) or shared non-PAD CE')
+    parser.add_argument('--fixed-validation-start', type=int, default=None,
+                        help='use the same admissible start bar for all validation pieces')
     args = parser.parse_args()
 
     if args.max_steps is not None and args.max_steps < 1:
@@ -262,6 +280,8 @@ if __name__ == "__main__":
     if args.patience is not None and args.patience < 1:
         parser.error('--patience must be positive')
     set_seed(args.seed)
+    PAD_LOSS_KWARGS = {'ignore_index': -100} if args.pad_loss == 'count' else {}
+    print('[pad-loss]', args.pad_loss, '[select-metric]', args.select_metric)
     max_train_steps = args.max_steps
     print('[seed]', args.seed, '[max_steps]', max_train_steps,
           '[max_epochs]', args.max_epochs)
@@ -331,7 +351,8 @@ if __name__ == "__main__":
         model_dec_seqlen=model_conf['max_len'],
         pieces=pickle_load(val_split),
         pad_to_same=True,
-        predict_key=predict_key
+        predict_key=predict_key,
+        appoint_st_bar=args.fixed_validation_start
     )
     print('[info] # training pieces:', len(dset.pieces))
     dloader = DataLoader(
@@ -393,6 +414,17 @@ if __name__ == "__main__":
         os.makedirs(optimizer_dir)
 
     shutil.copy(train_conf_path, os.path.join(ckpt_dir, 'config.yaml'))
+    import json as _json
+    with open(os.path.join(ckpt_dir, 'training_objective.json'), 'w') as _fh:
+        _state_hash = hashlib.sha256()
+        for _name, _tensor in sorted(model.state_dict().items()):
+            _state_hash.update(_name.encode())
+            _state_hash.update(_tensor.detach().cpu().contiguous().numpy().tobytes())
+        _json.dump({'pad_loss': args.pad_loss, 'select_metric': args.select_metric,
+                    'pad_token': int(dset.pad_token), 'vocab_size': int(dset.vocab_size),
+                    'loss_kwargs': PAD_LOSS_KWARGS, 'seed': args.seed,
+                    'initial_state_sha256': _state_hash.hexdigest(),
+                    'fixed_validation_start': args.fixed_validation_start}, _fh, indent=2)
 
     # 在训练开始前初始化早停相关变量
     best_val_loss = float('inf')
@@ -412,14 +444,20 @@ if __name__ == "__main__":
             torch.save(optimizer.state_dict(),
                     os.path.join(optimizer_dir, 'ep{:03d}_loss{:.3f}_optim.pt'.format(ep + 1, loss)))
         if not (ep + 1) % val_interval:
-            val_losses, total_acc_rec, chord_acc_rec, melody_acc_rec, others_acc_rec = \
+            val_losses, total_acc_rec, chord_acc_rec, melody_acc_rec, others_acc_rec, val_nonpad_ce = \
                 validate(model, val_dloader, val_dset.pad_token, model_type=model_type)
-            current_val_loss = np.mean(val_losses)  # 计算当前验证损失
+            own_val_loss = np.mean(val_losses)
+            current_val_loss = val_nonpad_ce if args.select_metric == 'nonpad_ce' else own_val_loss
+            if not np.isfinite(current_val_loss):
+                raise FloatingPointError('Non-finite checkpoint selection metric')
+            with open(os.path.join(ckpt_dir, 'val_nonpad_ce.txt'), 'a') as f:
+                f.write('ep{:03d}\town_valloss={:.6f}\tnonpad_ce={:.6f}\tselect={}\n'.format(
+                    ep + 1, own_val_loss, val_nonpad_ce, args.select_metric))
             
             with open(os.path.join(ckpt_dir, 'valloss.txt'), 'a') as f:
                 f.write("ep{:03d} | loss: {:.3f} | valloss: {:.3f} (±{:.3f}) | total_acc: {:.3f} | "
                         "chord_acc: {:.3f} | melody_acc: {:.3f} | others_acc: {:.3f}\n".format(
-                    ep + 1, loss, current_val_loss, np.std(val_losses),
+                    ep + 1, loss, own_val_loss, np.std(val_losses),
                     np.mean(total_acc_rec), np.mean(chord_acc_rec), np.mean(melody_acc_rec), np.mean(others_acc_rec)
                 ))
             

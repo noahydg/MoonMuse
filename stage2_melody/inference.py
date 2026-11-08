@@ -4,6 +4,8 @@ import time
 import yaml
 import shutil
 import argparse
+import json
+import hashlib
 import random
 import numpy as np
 from itertools import chain
@@ -17,6 +19,8 @@ from convert_key import degree2pitch, roman2majorDegree, roman2minorDegree
 repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if repo_root not in sys.path:
     sys.path.insert(0, repo_root)
+from source_key import declared_source_key
+from stage2_sampling_constraints import FunctionalMelodyState, pair_inadmissibles
 from generation_budget import (
     RejectionBudget,
     SegmentSamplingBudget,
@@ -193,10 +197,7 @@ def merge_tracks(melody_track, chord_track):
 def read_generated_events(events_file, event2idx):
     events = open(events_file).read().splitlines()
     # print('[test 1] events:', events)
-    if 'Key' in events[0]:
-        key = events[0]
-    else:
-        key = 'Key_C'
+    key = declared_source_key(events)
 
     bar_pos = np.where(np.array(events) == 'Bar_None')[0].tolist()
     bar_pos.append(len(events))
@@ -295,9 +296,15 @@ def generate_conditional(model, event2idx, idx2event, chord_events, primer,
                          max_events=10000, skip_check=False, max_bars=None,
                          temp=1.2, top_p=0.9, inadmissibles=None,
                          model_type="performer", max_rejections=None,
-                         max_segment_attempts=None):
+                         max_segment_attempts=None, diagnostics=None,
+                         guarded_generation=False, structured_generation=False):
+    guarded_generation = guarded_generation or structured_generation
+    if guarded_generation and skip_check:
+        raise ValueError('guarded_generation requires syntax checks')
     # 初始化生成的序列，包含primer、LeadSheet轨道标识、LeadSheet事件和Full轨道标识
     generated = primer + [event2idx['Track_Chord']] + chord_events[0] + [event2idx['Track_Melody']]
+    if guarded_generation and len(generated) > max_events:
+        raise ValueError('max_events is smaller than the initial conditioning prefix')
     # print('[test 0] primer:', primer, 'Track_LeadSheet:', event2idx['Track_LeadSheet'], 'chord_events[0]:', chord_events[0], 'Track_Full:', event2idx['Track_Full'])
     # print('[test 0] generated:', generated)
     # 把generated转化为事件数组
@@ -318,15 +325,40 @@ def generate_conditional(model, event2idx, idx2event, chord_events, primer,
     failed_cnt = 0  # 记录生成失败次数
     rejection_budget = RejectionBudget(max_rejections)
     sampling_budget = SegmentSamplingBudget(max_segment_attempts)
+    melody_state = FunctionalMelodyState() if structured_generation else None
+    attempt_history = []
+    sampled_attempts = 0
+    skipped_pad = 0
+    skipped_early_eos = 0
+    stop_reason = 'target_bars'
+
+    def finish(sequence, reason):
+        if diagnostics is not None:
+            diagnostics.update(stop_reason=reason, target_bars=target_bars,
+                completed_bars=generated_bars + (1 if reason == 'eos' else 0),
+                elapsed_seconds=time.time() - time_st, accepted_events=len(sequence),
+                sampling_policy=('structured-v2' if structured_generation else
+                                 'paired-v1' if guarded_generation else 'legacy'),
+                max_events=max_events, max_segment_attempts=max_segment_attempts,
+                max_rejections=max_rejections,
+                sampled_attempts=sampled_attempts, skipped_pad=skipped_pad,
+                skipped_early_eos=skipped_early_eos,
+                beat_rejections=rejection_budget.rejections,
+                closed_segment_attempts=attempt_history,
+                final_segment_attempts=sampling_budget.attempts)
+        return sequence
 
     # 开始生成事件，直到生成的小节数达到目标
     while generated_bars < target_bars:
+        if guarded_generation and len(generated) >= max_events:
+            return finish(generated, 'event_limit')
         if sampling_budget.exhausted:
             print('[FATAL] segment sampling attempt limit reached: {}'.format(
                 sampling_budget.attempts
             ))
-            return generated
+            return finish(generated, 'segment_attempt_limit')
         sampling_budget.record()
+        sampled_attempts += 1
         assert len(generated) == len(seg_inp)  # 确保生成序列和分段输入长度一致
 
         # 如果生成的序列长度小于最大解码输入长度，直接使用整个序列
@@ -360,6 +392,23 @@ def generate_conditional(model, event2idx, idx2event, chord_events, primer,
             step_inadmissibles = monotonic_beat_inadmissibles(
                 event2idx, cur_pos, base=inadmissibles
             )
+        if guarded_generation:
+            if melody_state is not None:
+                step_inadmissibles = melody_state.inadmissibles(
+                    event2idx, final_bar=generated_bars == target_bars - 1,
+                    base=step_inadmissibles)
+            step_inadmissibles = pair_inadmissibles(
+                event2idx, idx2event[generated[-1]], max_events - len(generated),
+                remaining_attempts=(None if max_segment_attempts is None else
+                                    max_segment_attempts - sampling_budget.attempts + 1),
+                base=step_inadmissibles)
+            # A conflicting caller mask must stop explicitly, never fall through
+            # an all-masked softmax or accept an illegal pair continuation.
+            allowed_logits = logits.copy()
+            if step_inadmissibles:
+                allowed_logits[step_inadmissibles] = -np.inf
+            if not np.isfinite(allowed_logits).any():
+                return finish(generated, 'constraint_dead_end')
         probs = temperature(logits, temp, inadmissibles=step_inadmissibles)  # 应用温度调节
         word = nucleus(probs, top_p)  # 使用nucleus采样
         word_event = idx2event[word]  # 获取采样到的事件
@@ -379,10 +428,10 @@ def generate_conditional(model, event2idx, idx2event, chord_events, primer,
                         print('[FATAL] cumulative rejection limit reached: {}'.format(
                             rejection_budget.rejections
                         ))
-                        return generated
+                        return finish(generated, 'rejection_limit')
                     if failed_cnt >= 256:  # 如果失败次数过多，退出生成
                         print('[FATAL] model stuck, exiting with generated events ...')
-                        return generated
+                        return finish(generated, 'model_stuck')
                     continue
                 else:
                     cur_pos = event_pos  # 更新当前位置
@@ -394,12 +443,18 @@ def generate_conditional(model, event2idx, idx2event, chord_events, primer,
             generated.append(word)  # 将事件添加到生成序列
             seg_inp.append(0)  # 更新分段输入
             generated_bars += 1  # 增加生成的小节数
+            attempt_history.append(sampling_budget.attempts)
             sampling_budget.reset()
+            if melody_state is not None:
+                melody_state.observe(word_event)
             print('[info] generated {} bars, #events = {}'.format(generated_bars, len(generated)))
             # print('[test 1] generated:', generated)
 
             # 如果还有小节需要生成，继续添加LeadSheet事件和Full轨道标识
             if generated_bars < target_bars:
+                if guarded_generation and (len(generated) +
+                        len(chord_events[generated_bars]) + 1 > max_events):
+                    return finish(generated, 'event_limit')
                 generated.extend(chord_events[generated_bars])
                 seg_inp.extend([0 for _ in range(len(chord_events[generated_bars]))])
 
@@ -410,28 +465,34 @@ def generate_conditional(model, event2idx, idx2event, chord_events, primer,
 
         # 如果生成的是PAD或EOS事件，跳过或结束生成
         if word_event == 'PAD_None' or (word_event == 'EOS_None' and generated_bars < target_bars - 1):
+            skipped_pad += int(word_event == 'PAD_None')
+            skipped_early_eos += int(word_event == 'EOS_None')
             continue
         elif word_event == 'EOS_None' and generated_bars == target_bars - 1:
             print('[info] gotten eos')
             generated.append(word)  # 添加EOS事件
+            stop_reason = 'eos'
             break
 
         # 将生成的事件添加到序列中
         generated.append(word)
+        if melody_state is not None:
+            melody_state.observe(word_event)
         # print('[test]' 'generated:', generated)
         seg_inp.append(1)
         steps += 1
 
         # 如果生成的序列长度超过最大事件数，停止生成
-        if len(generated) > max_events:
+        if not guarded_generation and len(generated) > max_events:
             print('[info] max events reached')
+            stop_reason = 'event_limit'
             break
 
     # 打印生成结果和时间统计
     print('-- generated events:', len(generated))
     print('-- time elapsed  : {:.2f} secs'.format(time.time() - time_st))
     print('-- time per event: {:.2f} secs'.format((time.time() - time_st) / len(generated)))
-    return strip_terminal_eos(generated, idx2event)
+    return finish(strip_terminal_eos(generated, idx2event), stop_reason)
 
 
 if __name__ == '__main__':
@@ -481,7 +542,15 @@ if __name__ == '__main__':
                         help='sampling temperature override')
     parser.add_argument('--top-p', '--top_p', dest='top_p', type=float, default=None,
                         help='nucleus-sampling probability override')
+    parser.add_argument('--write-generation-metadata', action='store_true',
+                        help='record the actual stop reason without altering event output')
+    parser.add_argument('--guarded-generation', action='store_true',
+                        help='functional pairs plus a strict total event cap (opt-in paired-v1 policy)')
+    parser.add_argument('--structured-generation', action='store_true',
+                        help='opt-in structured-v2: paired guard, melody control grammar and no repeated functional pitch at one onset')
     args = parser.parse_args()
+    if (args.guarded_generation or args.structured_generation) and args.representation != 'functional':
+        parser.error('guarded generation currently supports functional representation only')
 
     set_seed(args.seed)
     print('[seed]', args.seed)
@@ -603,6 +672,7 @@ if __name__ == '__main__':
                 # primer = [emotion, tempo]
                 primer = [emotion]
 
+            generation_metadata = {} if args.write_generation_metadata else None
             with torch.no_grad():
                 generated = generate_conditional(model, dset.event2idx, dset.idx2event,
                                                  chord_events, primer=primer,
@@ -610,13 +680,21 @@ if __name__ == '__main__':
                                                  max_bars=args.max_bars, temp=temp, top_p=top_p,
                                                  inadmissibles=None, model_type=model_type,
                                                  max_rejections=args.max_rejections or None,
-                                                 max_segment_attempts=args.max_segment_attempts or None)
+                                                 max_segment_attempts=args.max_segment_attempts or None,
+                                                 diagnostics=generation_metadata,
+                                                 guarded_generation=args.guarded_generation,
+                                                 structured_generation=args.structured_generation)
 
             generated = word2event(generated, dset.idx2event)
             # 把generated保存为txt文件
             output_event_path = os.path.join(out_dir ,out_name + '_' + e + '_melody.txt')
             print('Generated events saved to:', output_event_path)
             event_to_txt(generated, output_event_path)
+            if generation_metadata is not None:
+                generation_metadata.update(seed=args.seed, target=e, input_file=file,
+                    key=key, events_sha256=hashlib.sha256(open(output_event_path, 'rb').read()).hexdigest())
+                with open(output_event_path + '.generation.json', 'w') as metadata_file:
+                    json.dump(generation_metadata, metadata_file, indent=2)
             generated = extract_midi_events_from_generation(key, generated, relative_melody=relative_melody)
 
             # output_midi_path = os.path.join(out_dir, out_name + '_' + e + '_melody.mid')
