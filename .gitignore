@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+.ipynb_checkpoints/
+.venv/
+events/
+new_events/
+midi_data/
+generation/
+ckpt/
+best_weight/
+*.pt
+*.pth
+*.mid
+*.wav
+*.mp3
