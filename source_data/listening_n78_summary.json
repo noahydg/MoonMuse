@@ -1,0 +1,264 @@
+{
+  "by_quadrant": {
+    "Q1": {
+      "emo_disentangler": {
+        "any_defect_rate": 0.4230769230769231,
+        "arousal_accuracy": 0.4658119658119658,
+        "arousal_uncertain_rate": 0.021367521367521368,
+        "defect_counts": {
+          "abrupt_ending": 36,
+          "incoherent": 19,
+          "long_pause": 8,
+          "other": 15,
+          "overdense_fatiguing": 21,
+          "overlap_noise": 25,
+          "repetition": 10
+        },
+        "four_quadrant_accuracy": 0.3974358974358974,
+        "mean_coherence": 3.9914529914529915,
+        "mean_quality": 3.9444444444444446,
+        "ratings": 234,
+        "valence_accuracy": 0.7136752136752137,
+        "valence_uncertain_rate": 0.09829059829059829
+      },
+      "moonmuse_v70": {
+        "any_defect_rate": 0.5982905982905983,
+        "arousal_accuracy": 0.7692307692307693,
+        "arousal_uncertain_rate": 0.029914529914529916,
+        "defect_counts": {
+          "abrupt_ending": 17,
+          "incoherent": 50,
+          "long_pause": 8,
+          "other": 11,
+          "overdense_fatiguing": 72,
+          "overlap_noise": 43,
+          "repetition": 21
+        },
+        "four_quadrant_accuracy": 0.5299145299145299,
+        "mean_coherence": 3.482905982905983,
+        "mean_quality": 3.252136752136752,
+        "ratings": 234,
+        "valence_accuracy": 0.5897435897435898,
+        "valence_uncertain_rate": 0.11538461538461539
+      }
+    },
+    "Q2": {
+      "emo_disentangler": {
+        "any_defect_rate": 0.4444444444444444,
+        "arousal_accuracy": 0.782051282051282,
+        "arousal_uncertain_rate": 0.05128205128205128,
+        "defect_counts": {
+          "abrupt_ending": 28,
+          "incoherent": 22,
+          "long_pause": 2,
+          "other": 14,
+          "overdense_fatiguing": 23,
+          "overlap_noise": 43,
+          "repetition": 14
+        },
+        "four_quadrant_accuracy": 0.405982905982906,
+        "mean_coherence": 3.8974358974358974,
+        "mean_quality": 3.713675213675214,
+        "ratings": 234,
+        "valence_accuracy": 0.5427350427350427,
+        "valence_uncertain_rate": 0.10683760683760683
+      },
+      "moonmuse_v70": {
+        "any_defect_rate": 0.6282051282051282,
+        "arousal_accuracy": 0.6794871794871795,
+        "arousal_uncertain_rate": 0.09401709401709402,
+        "defect_counts": {
+          "abrupt_ending": 26,
+          "incoherent": 48,
+          "long_pause": 45,
+          "other": 14,
+          "overdense_fatiguing": 42,
+          "overlap_noise": 32,
+          "repetition": 17
+        },
+        "four_quadrant_accuracy": 0.13247863247863248,
+        "mean_coherence": 3.3376068376068377,
+        "mean_quality": 3.247863247863248,
+        "ratings": 234,
+        "valence_accuracy": 0.2094017094017094,
+        "valence_uncertain_rate": 0.21367521367521367
+      }
+    },
+    "Q3": {
+      "emo_disentangler": {
+        "any_defect_rate": 0.4444444444444444,
+        "arousal_accuracy": 0.6495726495726496,
+        "arousal_uncertain_rate": 0.06837606837606838,
+        "defect_counts": {
+          "abrupt_ending": 36,
+          "incoherent": 23,
+          "long_pause": 6,
+          "other": 17,
+          "overdense_fatiguing": 20,
+          "overlap_noise": 22,
+          "repetition": 18
+        },
+        "four_quadrant_accuracy": 0.3547008547008547,
+        "mean_coherence": 3.9188034188034186,
+        "mean_quality": 3.8376068376068377,
+        "ratings": 234,
+        "valence_accuracy": 0.4658119658119658,
+        "valence_uncertain_rate": 0.09401709401709402
+      },
+      "moonmuse_v70": {
+        "any_defect_rate": 0.5128205128205128,
+        "arousal_accuracy": 0.7606837606837606,
+        "arousal_uncertain_rate": 0.029914529914529916,
+        "defect_counts": {
+          "abrupt_ending": 21,
+          "incoherent": 34,
+          "long_pause": 25,
+          "other": 17,
+          "overdense_fatiguing": 23,
+          "overlap_noise": 32,
+          "repetition": 22
+        },
+        "four_quadrant_accuracy": 0.3888888888888889,
+        "mean_coherence": 3.6367521367521367,
+        "mean_quality": 3.5811965811965814,
+        "ratings": 234,
+        "valence_accuracy": 0.4444444444444444,
+        "valence_uncertain_rate": 0.10683760683760683
+      }
+    },
+    "Q4": {
+      "emo_disentangler": {
+        "any_defect_rate": 0.37606837606837606,
+        "arousal_accuracy": 0.6666666666666666,
+        "arousal_uncertain_rate": 0.04700854700854701,
+        "defect_counts": {
+          "abrupt_ending": 32,
+          "incoherent": 21,
+          "long_pause": 5,
+          "other": 22,
+          "overdense_fatiguing": 12,
+          "overlap_noise": 12,
+          "repetition": 11
+        },
+        "four_quadrant_accuracy": 0.36324786324786323,
+        "mean_coherence": 3.9957264957264957,
+        "mean_quality": 3.9358974358974357,
+        "ratings": 234,
+        "valence_accuracy": 0.6196581196581197,
+        "valence_uncertain_rate": 0.0811965811965812
+      },
+      "moonmuse_v70": {
+        "any_defect_rate": 0.452991452991453,
+        "arousal_accuracy": 0.8504273504273504,
+        "arousal_uncertain_rate": 0.017094017094017096,
+        "defect_counts": {
+          "abrupt_ending": 16,
+          "incoherent": 27,
+          "long_pause": 20,
+          "other": 17,
+          "overdense_fatiguing": 16,
+          "overlap_noise": 21,
+          "repetition": 21
+        },
+        "four_quadrant_accuracy": 0.3418803418803419,
+        "mean_coherence": 3.6538461538461537,
+        "mean_quality": 3.6623931623931623,
+        "ratings": 234,
+        "valence_accuracy": 0.4358974358974359,
+        "valence_uncertain_rate": 0.11965811965811966
+      }
+    }
+  },
+  "by_system": {
+    "emo_disentangler": {
+      "any_defect_rate": 0.422008547008547,
+      "arousal_accuracy": 0.6410256410256411,
+      "arousal_uncertain_rate": 0.04700854700854701,
+      "defect_counts": {
+        "abrupt_ending": 132,
+        "incoherent": 85,
+        "long_pause": 21,
+        "other": 68,
+        "overdense_fatiguing": 76,
+        "overlap_noise": 102,
+        "repetition": 53
+      },
+      "four_quadrant_accuracy": 0.3803418803418803,
+      "mean_coherence": 3.950854700854701,
+      "mean_quality": 3.857905982905983,
+      "ratings": 936,
+      "valence_accuracy": 0.5854700854700855,
+      "valence_uncertain_rate": 0.09508547008547008
+    },
+    "moonmuse_v70": {
+      "any_defect_rate": 0.5480769230769231,
+      "arousal_accuracy": 0.7649572649572649,
+      "arousal_uncertain_rate": 0.042735042735042736,
+      "defect_counts": {
+        "abrupt_ending": 80,
+        "incoherent": 159,
+        "long_pause": 98,
+        "other": 59,
+        "overdense_fatiguing": 153,
+        "overlap_noise": 128,
+        "repetition": 81
+      },
+      "four_quadrant_accuracy": 0.3482905982905983,
+      "mean_coherence": 3.5277777777777777,
+      "mean_quality": 3.4358974358974357,
+      "ratings": 936,
+      "valence_accuracy": 0.4198717948717949,
+      "valence_uncertain_rate": 0.1388888888888889
+    }
+  },
+  "confirmatory": {
+    "alpha_one_sided": 0.025,
+    "arousal_superiority": {
+      "listener_analysis": {
+        "lower_confidence_bound": 0.08826399015887267,
+        "mean_difference": 0.12393162393162392,
+        "n": 78,
+        "one_sided_confidence_level": 0.975,
+        "standard_deviation": 0.1581957648797844,
+        "standard_error": 0.017912143147231805
+      },
+      "margin": 0.0,
+      "passed": false,
+      "stimulus_analysis": {
+        "lower_confidence_bound": -0.026761893593034006,
+        "mean_difference": 0.12393162393162392,
+        "n": 24,
+        "one_sided_confidence_level": 0.975,
+        "standard_deviation": 0.35687126146099635,
+        "standard_error": 0.07284604120356702
+      }
+    },
+    "overall_bounded_baseline_outperformance_claim_passed": false,
+    "quality_noninferiority": {
+      "listener_analysis": {
+        "lower_confidence_bound": -0.5114954436943913,
+        "mean_difference": -0.42200854700854695,
+        "n": 78,
+        "one_sided_confidence_level": 0.975,
+        "standard_deviation": 0.3968989969486113,
+        "standard_error": 0.04493996191199385
+      },
+      "margin": -0.3,
+      "passed": false,
+      "stimulus_analysis": {
+        "lower_confidence_bound": -0.590470743022083,
+        "mean_difference": -0.42200854700854706,
+        "n": 24,
+        "one_sided_confidence_level": 0.975,
+        "standard_deviation": 0.3989509130013033,
+        "standard_error": 0.08143551410588971
+      }
+    }
+  },
+  "participants": 78,
+  "participants_by_form": {
+    "F1": 39,
+    "F2": 39
+  },
+  "ratings": 1872
+}

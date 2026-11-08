@@ -1,0 +1,621 @@
+{
+  "snapshot_sha256": "b565195ef4bde4e3f3415bde5ab210d961d31d8eca67b05db31000f83e4c02bb",
+  "scope": "Post-hoc cumulative-playback-duration sensitivity; fixed 69 complete questionnaires; main estimator and endpoint hierarchy retained.",
+  "duration_definition": "Accumulated playback seconds divided by the full rendered duration of each individual clip, including repeats; both clips must meet the threshold. This is not unique temporal coverage.",
+  "results": {
+    "within": [
+      {
+        "threshold": 0,
+        "comparisons": 414,
+        "listeners": 69,
+        "source_target_cells": 42,
+        "endpoints": {
+          "model": {
+            "estimable": true,
+            "estimate": 1.4029298248048248,
+            "observations": 410,
+            "listeners": 69,
+            "sources": 21,
+            "df": 20,
+            "two_way_HC1": {
+              "se": 0.11891093444360878,
+              "ci95": [
+                1.1548859620752325,
+                1.650973687534417
+              ],
+              "p_two_sided": 1.833666289690699e-10
+            },
+            "cluster_sum_HC1": {
+              "se": 0.1783170859363417,
+              "ci95": [
+                1.0309669015186549,
+                1.7748927480909946
+              ],
+              "p_two_sided": 1.5069983789151045e-07
+            }
+          },
+          "other": {
+            "estimable": true,
+            "estimate": 1.4597308170224836,
+            "observations": 413,
+            "listeners": 69,
+            "sources": 21,
+            "df": 20,
+            "two_way_HC1": {
+              "se": 0.11220389868132928,
+              "ci95": [
+                1.2256775857325113,
+                1.693784048312456
+              ],
+              "p_two_sided": 3.2201741741240185e-11
+            },
+            "cluster_sum_HC1": {
+              "se": 0.16974291312478743,
+              "ci95": [
+                1.1056533048117565,
+                1.8138083292332108
+              ],
+              "p_two_sided": 3.7490400099268716e-08
+            }
+          },
+          "difference": {
+            "estimable": true,
+            "estimate": -0.05338889505556171,
+            "observations": 410,
+            "listeners": 69,
+            "sources": 21,
+            "df": 20,
+            "two_way_HC1": {
+              "se": 0.08804800612864372,
+              "ci95": [
+                -0.2370538174445509,
+                0.13027602733342747
+              ],
+              "p_two_sided": 0.5510961040583012
+            },
+            "cluster_sum_HC1": {
+              "se": 0.12188865648315036,
+              "ci95": [
+                -0.3076441771157554,
+                0.200866387004632
+              ],
+              "p_two_sided": 0.6660705758521079
+            }
+          },
+          "preference": {
+            "estimable": true,
+            "estimate": -0.00047448693282027034,
+            "observations": 337,
+            "listeners": 67,
+            "sources": 21,
+            "df": 20,
+            "two_way_HC1": {
+              "se": 0.03842196584678104,
+              "ci95": [
+                -0.08062130326130189,
+                0.07967232939566134
+              ],
+              "p_two_sided": 0.9902692409218833
+            },
+            "cluster_sum_HC1": {
+              "se": 0.05637589721144391,
+              "ci95": [
+                -0.11807254782270829,
+                0.11712357395706774
+              ],
+              "p_two_sided": 0.9933680836158478
+            }
+          }
+        }
+      },
+      {
+        "threshold": 0.5,
+        "comparisons": 267,
+        "listeners": 59,
+        "source_target_cells": 42,
+        "endpoints": {
+          "model": {
+            "estimable": true,
+            "estimate": 1.4276069223985888,
+            "observations": 265,
+            "listeners": 59,
+            "sources": 21,
+            "df": 20,
+            "two_way_HC1": {
+              "se": 0.1644332855913952,
+              "ci95": [
+                1.0846050991411142,
+                1.7706087456560633
+              ],
+              "p_two_sided": 3.220107252040783e-08
+            },
+            "cluster_sum_HC1": {
+              "se": 0.2358069401815551,
+              "ci95": [
+                0.9357222645682631,
+                1.9194915802289145
+              ],
+              "p_two_sided": 6.4333556100110925e-06
+            }
+          },
+          "other": {
+            "estimable": true,
+            "estimate": 1.441490299823633,
+            "observations": 267,
+            "listeners": 59,
+            "sources": 21,
+            "df": 20,
+            "two_way_HC1": {
+              "se": 0.155868025324416,
+              "ci95": [
+                1.1163552963993955,
+                1.7666253032478705
+              ],
+              "p_two_sided": 1.158062939576488e-08
+            },
+            "cluster_sum_HC1": {
+              "se": 0.22539383607301955,
+              "ci95": [
+                0.9713269965362862,
+                1.9116536031109796
+              ],
+              "p_two_sided": 3.070809042428297e-06
+            }
+          },
+          "difference": {
+            "estimable": true,
+            "estimate": -0.011651234567901222,
+            "observations": 265,
+            "listeners": 59,
+            "sources": 21,
+            "df": 20,
+            "two_way_HC1": {
+              "se": 0.09241657903120805,
+              "ci95": [
+                -0.20442884034835562,
+                0.18112637121255315
+              ],
+              "p_two_sided": 0.9009329285823802
+            },
+            "cluster_sum_HC1": {
+              "se": 0.13633789162409599,
+              "ci95": [
+                -0.29604709297305654,
+                0.27274462383725406
+              ],
+              "p_two_sided": 0.9327465913435509
+            }
+          },
+          "preference": {
+            "estimable": true,
+            "estimate": -0.02661210317460318,
+            "observations": 228,
+            "listeners": 59,
+            "sources": 21,
+            "df": 20,
+            "two_way_HC1": {
+              "se": 0.05075769093053025,
+              "ci95": [
+                -0.13249079112330597,
+                0.0792665847740996
+              ],
+              "p_two_sided": 0.6058347095252179
+            },
+            "cluster_sum_HC1": {
+              "se": 0.07457831616598477,
+              "ci95": [
+                -0.18217974465548228,
+                0.1289555383062759
+              ],
+              "p_two_sided": 0.7249530840642491
+            }
+          }
+        }
+      },
+      {
+        "threshold": 0.8,
+        "comparisons": 199,
+        "listeners": 53,
+        "source_target_cells": 42,
+        "endpoints": {
+          "model": {
+            "estimable": true,
+            "estimate": 1.4145171957671956,
+            "observations": 197,
+            "listeners": 53,
+            "sources": 21,
+            "df": 20,
+            "two_way_HC1": {
+              "se": 0.19291933874218956,
+              "ci95": [
+                1.0120945068802922,
+                1.816939884654099
+              ],
+              "p_two_sided": 4.361601756835937e-07
+            },
+            "cluster_sum_HC1": {
+              "se": 0.2850828332180736,
+              "ci95": [
+                0.8198448262313112,
+                2.00918956530308
+              ],
+              "p_two_sided": 7.504637868678877e-05
+            }
+          },
+          "other": {
+            "estimable": true,
+            "estimate": 1.4641038359788356,
+            "observations": 199,
+            "listeners": 53,
+            "sources": 21,
+            "df": 20,
+            "two_way_HC1": {
+              "se": 0.1862246534195709,
+              "ci95": [
+                1.0756460159658618,
+                1.8525616559918094
+              ],
+              "p_two_sided": 1.5234872567215817e-07
+            },
+            "cluster_sum_HC1": {
+              "se": 0.2607847838788711,
+              "ci95": [
+                0.9201163092043895,
+                2.008091362753282
+              ],
+              "p_two_sided": 1.7040504909057384e-05
+            }
+          },
+          "difference": {
+            "estimable": true,
+            "estimate": -0.047652116402116404,
+            "observations": 197,
+            "listeners": 53,
+            "sources": 21,
+            "df": 20,
+            "two_way_HC1": {
+              "se": 0.11741180235081092,
+              "ci95": [
+                -0.29256884438350905,
+                0.19726461157927622
+              ],
+              "p_two_sided": 0.6891587727851046
+            },
+            "cluster_sum_HC1": {
+              "se": 0.1647641653741274,
+              "ci95": [
+                -0.3913441427918097,
+                0.29603990998757684
+              ],
+              "p_two_sided": 0.7753942445616941
+            }
+          },
+          "preference": {
+            "estimable": false,
+            "missing_source_target_cells": 1,
+            "observations": 167,
+            "reason": "Original equal-source-target estimand has an empty valid-response cell; no cell dropped or weight changed."
+          }
+        }
+      }
+    ],
+    "system": [
+      {
+        "threshold": 0,
+        "comparisons": 138,
+        "listeners": 69,
+        "source_target_cells": 19,
+        "endpoints": {
+          "model": {
+            "estimable": true,
+            "estimate": 1.0647321428571432,
+            "observations": 138,
+            "listeners": 69,
+            "sources": 19,
+            "df": 18,
+            "two_way_HC1": {
+              "se": 0.4147321906123703,
+              "ci95": [
+                0.19341214280219943,
+                1.9360521429120872
+              ],
+              "p_two_sided": 0.019386013630473316
+            },
+            "cluster_sum_HC1": {
+              "se": 0.4716692155717862,
+              "ci95": [
+                0.073791892159213,
+                2.0556723935550734
+              ],
+              "p_two_sided": 0.03664827432790294
+            }
+          },
+          "other": {
+            "estimable": true,
+            "estimate": 1.3302083333333337,
+            "observations": 138,
+            "listeners": 69,
+            "sources": 19,
+            "df": 18,
+            "two_way_HC1": {
+              "se": 0.40544418826799256,
+              "ci95": [
+                0.47840170211350286,
+                2.1820149645531646
+              ],
+              "p_two_sided": 0.004152991977524401
+            },
+            "cluster_sum_HC1": {
+              "se": 0.4792759878003586,
+              "ci95": [
+                0.32328684720530276,
+                2.3371298194613646
+              ],
+              "p_two_sided": 0.012475301523896875
+            }
+          },
+          "difference": {
+            "estimable": true,
+            "estimate": -0.2654761904761905,
+            "observations": 138,
+            "listeners": 69,
+            "sources": 19,
+            "df": 18,
+            "two_way_HC1": {
+              "se": 0.6007972255007299,
+              "ci95": [
+                -1.5277043232462921,
+                0.9967519422939113
+              ],
+              "p_two_sided": 0.6638438716486121
+            },
+            "cluster_sum_HC1": {
+              "se": 0.6744524133788842,
+              "ci95": [
+                -1.6824481308375951,
+                1.1514957498852143
+              ],
+              "p_two_sided": 0.6984871190512765
+            }
+          },
+          "preference": {
+            "estimable": true,
+            "estimate": 0.14672619047619048,
+            "observations": 136,
+            "listeners": 69,
+            "sources": 19,
+            "df": 18,
+            "two_way_HC1": {
+              "se": 0.09858635874520166,
+              "ci95": [
+                -0.060396063478705825,
+                0.35384844443108676
+              ],
+              "p_two_sided": 0.15398209970002633
+            },
+            "cluster_sum_HC1": {
+              "se": 0.12694751226484735,
+              "ci95": [
+                -0.1199806359947869,
+                0.41343301694716783
+              ],
+              "p_two_sided": 0.2628738210101563
+            }
+          }
+        }
+      },
+      {
+        "threshold": 0.5,
+        "comparisons": 100,
+        "listeners": 58,
+        "source_target_cells": 19,
+        "endpoints": {
+          "model": {
+            "estimable": true,
+            "estimate": 1.043313492063492,
+            "observations": 100,
+            "listeners": 58,
+            "sources": 19,
+            "df": 18,
+            "two_way_HC1": {
+              "se": 0.4334741411250222,
+              "ci95": [
+                0.13261811509941257,
+                1.9540088690275716
+              ],
+              "p_two_sided": 0.02704297981435033
+            },
+            "cluster_sum_HC1": {
+              "se": 0.5025241938224966,
+              "ci95": [
+                -0.012450662492511144,
+                2.099077646619495
+              ],
+              "p_two_sided": 0.05248152406886589
+            }
+          },
+          "other": {
+            "estimable": true,
+            "estimate": 1.4037400793650798,
+            "observations": 100,
+            "listeners": 58,
+            "sources": 19,
+            "df": 18,
+            "two_way_HC1": {
+              "se": 0.48797752913958514,
+              "ci95": [
+                0.3785373332534001,
+                2.4289428254767595
+              ],
+              "p_two_sided": 0.010038701174138177
+            },
+            "cluster_sum_HC1": {
+              "se": 0.5888321456106786,
+              "ci95": [
+                0.16664964664923065,
+                2.640830512080929
+              ],
+              "p_two_sided": 0.028345045423865678
+            }
+          },
+          "difference": {
+            "estimable": true,
+            "estimate": -0.36042658730158733,
+            "observations": 100,
+            "listeners": 58,
+            "sources": 19,
+            "df": 18,
+            "two_way_HC1": {
+              "se": 0.6799821899723122,
+              "ci95": [
+                -1.7890161571857335,
+                1.068162982582559
+              ],
+              "p_two_sided": 0.6025530946764721
+            },
+            "cluster_sum_HC1": {
+              "se": 0.7874261758508679,
+              "ci95": [
+                -2.0147475952093297,
+                1.2938944206061551
+              ],
+              "p_two_sided": 0.6526252759531814
+            }
+          },
+          "preference": {
+            "estimable": true,
+            "estimate": 0.1341815476190476,
+            "observations": 99,
+            "listeners": 58,
+            "sources": 19,
+            "df": 18,
+            "two_way_HC1": {
+              "se": 0.1012112665362944,
+              "ci95": [
+                -0.07845543296775565,
+                0.34681852820585085
+              ],
+              "p_two_sided": 0.20150031896438678
+            },
+            "cluster_sum_HC1": {
+              "se": 0.14349539785270515,
+              "ci95": [
+                -0.167291096402846,
+                0.4356541916409412
+              ],
+              "p_two_sided": 0.36211672653304217
+            }
+          }
+        }
+      },
+      {
+        "threshold": 0.8,
+        "comparisons": 67,
+        "listeners": 38,
+        "source_target_cells": 19,
+        "endpoints": {
+          "model": {
+            "estimable": true,
+            "estimate": 1.0958333333333332,
+            "observations": 67,
+            "listeners": 38,
+            "sources": 19,
+            "df": 18,
+            "two_way_HC1": {
+              "se": 0.38233901177146146,
+              "ci95": [
+                0.292568876658722,
+                1.8990977900079444
+              ],
+              "p_two_sided": 0.010268875952334059
+            },
+            "cluster_sum_HC1": {
+              "se": 0.48336949839355314,
+              "ci95": [
+                0.0803117005781,
+                2.1113549660885664
+              ],
+              "p_two_sided": 0.03593972245417527
+            }
+          },
+          "other": {
+            "estimable": true,
+            "estimate": 1.3885416666666668,
+            "observations": 67,
+            "listeners": 38,
+            "sources": 19,
+            "df": 18,
+            "two_way_HC1": {
+              "se": 0.49736447457697447,
+              "ci95": [
+                0.34361767999503656,
+                2.4334656533382972
+              ],
+              "p_two_sided": 0.012046499715313163
+            },
+            "cluster_sum_HC1": {
+              "se": 0.6537973157655657,
+              "ci95": [
+                0.01496447612441143,
+                2.762118857208922
+              ],
+              "p_two_sided": 0.047802812684518504
+            }
+          },
+          "difference": {
+            "estimable": true,
+            "estimate": -0.29270833333333324,
+            "observations": 67,
+            "listeners": 38,
+            "sources": 19,
+            "df": 18,
+            "two_way_HC1": {
+              "se": 0.6684699911867642,
+              "ci95": [
+                -1.6971116710572867,
+                1.11169500439062
+              ],
+              "p_two_sided": 0.6666839527683908
+            },
+            "cluster_sum_HC1": {
+              "se": 0.8578487093547558,
+              "ci95": [
+                -2.0949815940090013,
+                1.5095649273423346
+              ],
+              "p_two_sided": 0.7368946228016464
+            }
+          },
+          "preference": {
+            "estimable": true,
+            "estimate": -0.084375,
+            "observations": 66,
+            "listeners": 38,
+            "sources": 19,
+            "df": 18,
+            "two_way_HC1": {
+              "se": 0.13086281196786537,
+              "ci95": [
+                -0.35930756591119684,
+                0.19055756591119685
+              ],
+              "p_two_sided": 0.5272159474695873
+            },
+            "cluster_sum_HC1": {
+              "se": 0.1831929695177737,
+              "ci95": [
+                -0.4692491472770811,
+                0.30049914727708116
+              ],
+              "p_two_sided": 0.6506157883212437
+            }
+          }
+        }
+      }
+    ]
+  },
+  "median_marginal_se": {
+    "model": 0.4938410354091367,
+    "other": 0.49633577983982413
+  }
+}

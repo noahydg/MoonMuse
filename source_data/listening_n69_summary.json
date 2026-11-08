@@ -1,0 +1,482 @@
+{
+  "completed_forms": 69,
+  "method": "Equal quadrant and source-cell means; four target nuisance means; listener+source HC1 sum, t(min clusters-1); conventional two-way HC1 as sensitivity.",
+  "inference": "One primary: within preference. Secondary intervals nominal/unadjusted. N69 snapshot selected during collection; no N69 power claim.",
+  "results": {
+    "within": {
+      "comparisons": 414,
+      "choices": {
+        "R-per-source-matched": 95,
+        "tie": 145,
+        "MoonMuse": 97,
+        "unable": 77
+      },
+      "preference": {
+        "estimate": -0.00047448693282027034,
+        "observations": 337,
+        "listeners": 67,
+        "sources": 21,
+        "df": 20,
+        "two_way_HC1": {
+          "se": 0.03842196584678104,
+          "ci95": [
+            -0.08062130326130189,
+            0.07967232939566134
+          ],
+          "p_two_sided": 0.9902692409218833
+        },
+        "cluster_sum_HC1": {
+          "se": 0.05637589721144391,
+          "ci95": [
+            -0.11807254782270829,
+            0.11712357395706774
+          ],
+          "p_two_sided": 0.9933680836158478
+        }
+      },
+      "preference_by_quadrant": {
+        "Q1": -0.17288359788359794,
+        "Q2": -0.05185185185185185,
+        "Q3": 0.09353856020522688,
+        "Q4": 0.1292989417989418
+      },
+      "unable_bounds": [
+        -0.1767461512253179,
+        0.19616720085470085
+      ],
+      "equal_arousal": 238,
+      "arousal": {
+        "model": {
+          "mean": 4.159208788896289,
+          "by_quadrant": {
+            "Q1": 4.751818783068782,
+            "Q2": 4.96952861952862,
+            "Q3": 3.6908184408184415,
+            "Q4": 3.2246693121693117
+          },
+          "missing": 4,
+          "high_minus_low": {
+            "estimate": 1.4029298248048248,
+            "observations": 410,
+            "listeners": 69,
+            "sources": 21,
+            "df": 20,
+            "two_way_HC1": {
+              "se": 0.11891093444360878,
+              "ci95": [
+                1.1548859620752325,
+                1.650973687534417
+              ],
+              "p_two_sided": 1.833666289690699e-10
+            },
+            "cluster_sum_HC1": {
+              "se": 0.1783170859363417,
+              "ci95": [
+                1.0309669015186549,
+                1.7748927480909946
+              ],
+              "p_two_sided": 1.5069983789151045e-07
+            }
+          }
+        },
+        "other": {
+          "mean": 4.270563329417496,
+          "by_quadrant": {
+            "Q1": 4.81031746031746,
+            "Q2": 5.190540015540015,
+            "Q3": 3.8008072174738845,
+            "Q4": 3.2805886243386237
+          },
+          "missing": 1,
+          "high_minus_low": {
+            "estimate": 1.4597308170224836,
+            "observations": 413,
+            "listeners": 69,
+            "sources": 21,
+            "df": 20,
+            "two_way_HC1": {
+              "se": 0.11220389868132928,
+              "ci95": [
+                1.2256775857325113,
+                1.693784048312456
+              ],
+              "p_two_sided": 3.2201741741240185e-11
+            },
+            "cluster_sum_HC1": {
+              "se": 0.16974291312478743,
+              "ci95": [
+                1.1056533048117565,
+                1.8138083292332108
+              ],
+              "p_two_sided": 3.7490400099268716e-08
+            }
+          }
+        },
+        "difference_in_differences": {
+          "estimate": -0.05338889505556171,
+          "observations": 410,
+          "listeners": 69,
+          "sources": 21,
+          "df": 20,
+          "two_way_HC1": {
+            "se": 0.08804800612864372,
+            "ci95": [
+              -0.2370538174445509,
+              0.13027602733342747
+            ],
+            "p_two_sided": 0.5510961040583012
+          },
+          "cluster_sum_HC1": {
+            "se": 0.12188865648315036,
+            "ci95": [
+              -0.3076441771157554,
+              0.200866387004632
+            ],
+            "p_two_sided": 0.6660705758521079
+          }
+        },
+        "source_gaps": [
+          {
+            "source": "045e0b0c4821a522061c50825367c1aa57bb97140787ddc84674f9a3a531e301",
+            "seed": 43,
+            "valence": "positive",
+            "model": 2.133333333333333,
+            "other": 2.1111111111111107,
+            "difference": 0.022222222222222143
+          },
+          {
+            "source": "060c0a1521fb50e130e0474e00f77f302cb3d65abf0ddbbcc6e0585074333304",
+            "seed": 43,
+            "valence": "positive",
+            "model": 2.1428571428571432,
+            "other": 2.25,
+            "difference": -0.10714285714285676
+          },
+          {
+            "source": "076ef691a389689799f9c9d4cdb4859f9bbc11ba6e22535d1d6ecc63f4f606da",
+            "seed": 43,
+            "valence": "negative",
+            "model": 1.25,
+            "other": 1.4500000000000002,
+            "difference": -0.20000000000000018
+          },
+          {
+            "source": "0899090f491da6e46a3c6b20ec996e3e615a52698697426a6ac1f89aafe613e6",
+            "seed": 44,
+            "valence": "positive",
+            "model": 1.7750000000000004,
+            "other": 1.9500000000000002,
+            "difference": -0.17499999999999982
+          },
+          {
+            "source": "27b2876066afd5f0283083852db425f3c83d4076dc0a5c76e38bb787dc5eacb0",
+            "seed": 44,
+            "valence": "negative",
+            "model": 1.3333333333333335,
+            "other": 1.6666666666666665,
+            "difference": -0.33333333333333304
+          },
+          {
+            "source": "36082d04a26580fd5a6a0a12a11306cc266537e8551e4df028ad8e1434bfe6a6",
+            "seed": 42,
+            "valence": "positive",
+            "model": 0.44444444444444464,
+            "other": 0.5,
+            "difference": -0.05555555555555536
+          },
+          {
+            "source": "62fccf21744e4f3c36259133b39d7aa511f744a50b99508635575a8b0daee791",
+            "seed": 44,
+            "valence": "positive",
+            "model": 1.7999999999999998,
+            "other": 1.1749999999999998,
+            "difference": 0.625
+          },
+          {
+            "source": "7845ea17e83638d37f8a4cb4f0b0cce262e440f99fa546a14c6189d5bb2c2fe4",
+            "seed": 43,
+            "valence": "positive",
+            "model": 2.0,
+            "other": 2.5,
+            "difference": -0.5
+          },
+          {
+            "source": "89840683f599ce704f72eef4b185dce6308710fff8efbfb27e00f78fad6c2edc",
+            "seed": 42,
+            "valence": "negative",
+            "model": 1.3257575757575757,
+            "other": 0.9090909090909092,
+            "difference": 0.4166666666666665
+          },
+          {
+            "source": "994cb7cbee6182a19ed544d4b4ea85b7595122d1e1aedd8d060af8b3b7ccb0fb",
+            "seed": 43,
+            "valence": "negative",
+            "model": 1.641025641025641,
+            "other": 1.6068376068376073,
+            "difference": 0.03418803418803362
+          },
+          {
+            "source": "9e05f881e0d4f39f4562fd9487f57d4d0f95451892d444e02819af2e55e90704",
+            "seed": 42,
+            "valence": "positive",
+            "model": 1.2678571428571432,
+            "other": 1.7321428571428568,
+            "difference": -0.4642857142857135
+          },
+          {
+            "source": "a8291c367e8e6e67095614e68237d9cde5a12f2773a1d590b95cf9cd7b497bc8",
+            "seed": 42,
+            "valence": "positive",
+            "model": 3.05,
+            "other": 2.2,
+            "difference": 0.8499999999999996
+          },
+          {
+            "source": "ae900e699859051256c9474ffe282f8c3b02e40c5dbad00f3125a23ea5d92094",
+            "seed": 42,
+            "valence": "positive",
+            "model": 1.333333333333333,
+            "other": 1.3333333333333335,
+            "difference": -4.440892098500626e-16
+          },
+          {
+            "source": "aec9e8fb91ed460dae1391a2205848446660f15e5029e10d1cf95b6ba0895002",
+            "seed": 44,
+            "valence": "positive",
+            "model": 0.5178571428571432,
+            "other": 0.6607142857142856,
+            "difference": -0.14285714285714235
+          },
+          {
+            "source": "b01d950a015084840cee2ecec32b8a7657f4b7976ea643e5372a9c9932aa3caa",
+            "seed": 43,
+            "valence": "positive",
+            "model": 0.3333333333333335,
+            "other": 0.43055555555555536,
+            "difference": -0.09722222222222188
+          },
+          {
+            "source": "b5010a665bade0bb06ca957fd02f958e7e14adfd3cefbbe460e291828f7e2ce2",
+            "seed": 44,
+            "valence": "negative",
+            "model": 1.0,
+            "other": 1.0833333333333335,
+            "difference": -0.08333333333333348
+          },
+          {
+            "source": "c2fa2dd92a9cf1537a8d5e4d92cfd8db5d0e3229250c32e9626f2ad2a9c99d17",
+            "seed": 42,
+            "valence": "negative",
+            "model": 0.9454545454545462,
+            "other": 1.25,
+            "difference": -0.3045454545454538
+          },
+          {
+            "source": "ceb61bae442d72703603991eb6848ec7e5c9de6f98c08a52d88c983ca51cb497",
+            "seed": 44,
+            "valence": "positive",
+            "model": 1.5277777777777777,
+            "other": 1.5138888888888893,
+            "difference": 0.013888888888888395
+          },
+          {
+            "source": "dd354fcdaf0c98b031ed3933bd7caab722d95adf539e48776620cfd6468a233e",
+            "seed": 42,
+            "valence": "negative",
+            "model": 1.5,
+            "other": 1.75,
+            "difference": -0.25
+          },
+          {
+            "source": "e1fea0b5bc8ef2b3a8d61a4a6b42e3f6cfadd7b862d21423900201e3ec7e17a2",
+            "seed": 44,
+            "valence": "negative",
+            "model": 1.1538461538461537,
+            "other": 1.7788461538461537,
+            "difference": -0.625
+          },
+          {
+            "source": "ec101d030093d75fec2820940490d6e4d2e4cc7a32aa0aa2630fe38b7009d744",
+            "seed": 43,
+            "valence": "negative",
+            "model": 1.3589743589743595,
+            "other": 1.0128205128205128,
+            "difference": 0.3461538461538467
+          }
+        ]
+      },
+      "valence": {
+        "model": {
+          "counts": {
+            "positive": 149,
+            "mixed": 142,
+            "negative": 91,
+            "NA": 32
+          },
+          "correct": 169,
+          "valid": 382,
+          "weighted_accuracy": 0.4313699995991662
+        },
+        "other": {
+          "counts": {
+            "positive": 150,
+            "mixed": 135,
+            "negative": 97,
+            "NA": 32
+          },
+          "correct": 178,
+          "valid": 382,
+          "weighted_accuracy": 0.45265126463043126
+        }
+      },
+      "preference_by_seed": {
+        "42": {
+          "mean": -0.03893022486772488,
+          "by_quadrant": {
+            "Q1": -0.35396825396825393,
+            "Q2": -0.2619047619047619,
+            "Q3": 0.14814814814814817,
+            "Q4": 0.31200396825396826
+          }
+        },
+        "43": {
+          "mean": -0.03614944083694083,
+          "by_quadrant": {
+            "Q1": -0.3571428571428571,
+            "Q2": -0.12222222222222223,
+            "Q3": 0.04458874458874459,
+            "Q4": 0.29017857142857145
+          }
+        },
+        "44": {
+          "mean": 0.07365620490620489,
+          "by_quadrant": {
+            "Q1": 0.19246031746031744,
+            "Q2": 0.22857142857142856,
+            "Q3": 0.08787878787878789,
+            "Q4": -0.2142857142857143
+          }
+        }
+      }
+    },
+    "system": {
+      "comparisons": 138,
+      "choices": {
+        "EMO-Disentangler": 50,
+        "tie": 20,
+        "MoonMuse": 66,
+        "unable": 2
+      },
+      "preference": {
+        "estimate": 0.14672619047619048,
+        "observations": 136,
+        "listeners": 69,
+        "sources": 19,
+        "df": 18,
+        "two_way_HC1": {
+          "se": 0.09858635874520166,
+          "ci95": [
+            -0.060396063478705825,
+            0.35384844443108676
+          ],
+          "p_two_sided": 0.15398209970002633
+        },
+        "cluster_sum_HC1": {
+          "se": 0.12694751226484735,
+          "ci95": [
+            -0.1199806359947869,
+            0.41343301694716783
+          ],
+          "p_two_sided": 0.2628738210101563
+        }
+      },
+      "preference_by_quadrant": {
+        "Q1": 0.00714285714285714,
+        "Q2": 0.09166666666666666,
+        "Q3": 0.14285714285714285,
+        "Q4": 0.34523809523809523
+      },
+      "unable_bounds": [
+        0.11547619047619047,
+        0.14672619047619045
+      ],
+      "equal_arousal": 20,
+      "arousal": {
+        "model": {
+          "mean": 4.074032738095237,
+          "by_quadrant": {
+            "Q1": 5.110714285714286,
+            "Q2": 4.102083333333333,
+            "Q3": 4.091269841269841,
+            "Q4": 2.992063492063492
+          },
+          "missing": 0
+        },
+        "other": {
+          "mean": 4.200818452380952,
+          "by_quadrant": {
+            "Q1": 4.696428571428571,
+            "Q2": 5.035416666666666,
+            "Q3": 3.5992063492063493,
+            "Q4": 3.4722222222222223
+          },
+          "missing": 0
+        }
+      },
+      "valence": {
+        "model": {
+          "counts": {
+            "negative": 31,
+            "positive": 54,
+            "mixed": 47,
+            "NA": 6
+          },
+          "correct": 65,
+          "valid": 132,
+          "weighted_accuracy": 0.48638392857142854
+        },
+        "other": {
+          "counts": {
+            "negative": 41,
+            "positive": 41,
+            "mixed": 49,
+            "NA": 7
+          },
+          "correct": 63,
+          "valid": 131,
+          "weighted_accuracy": 0.4751984126984127
+        }
+      },
+      "preference_by_seed": {
+        "42": {
+          "mean": 0.05674603174603173,
+          "by_quadrant": {
+            "Q1": 0.21428571428571427,
+            "Q2": -0.06666666666666667,
+            "Q3": -0.21428571428571427,
+            "Q4": 0.2936507936507936
+          }
+        },
+        "43": {
+          "mean": 0.14285714285714285,
+          "by_quadrant": {
+            "Q1": -0.25,
+            "Q2": 0.25,
+            "Q3": 0.0,
+            "Q4": 0.5714285714285714
+          }
+        },
+        "44": {
+          "mean": null,
+          "by_quadrant": {
+            "Q1": -0.07142857142857142,
+            "Q2": null,
+            "Q3": 0.6428571428571428,
+            "Q4": 0.2222222222222222
+          }
+        }
+      }
+    }
+  }
+}
